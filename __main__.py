@@ -71,7 +71,7 @@ def worker_th_task(verbose=False):
             else:
                 task_q.put(DONE)
         else: 
-            speech = t2s.t2s(task[1])
+            speech = t2s.t2s(task)
             #RandomSleep();speech = b'a'
             result_q.put((task[0],speech))
 
@@ -102,7 +102,7 @@ def main():
     parse = ArgumentParser(usage='Using: %(prog)s [-tdv] <txt>',
             description='把小说转换成mp3，使用的baidu语音合成API.',
             epilog='NONE')
-    parse.add_argument('-t','--threads',type=int,default=10,help='spccify threads.')
+    parse.add_argument('-t','--threads',type=int,default=50,help='spccify threads.')
     parse.add_argument('-d','--dir',dest='dir',default='.',help='specify directory.')
     parse.add_argument('-v','--verbose',action='store_true',help='show verbose')
     parse.add_argument('txt',help='txt text.')
