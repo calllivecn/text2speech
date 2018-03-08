@@ -1,13 +1,23 @@
-merge-mp3.sh 依赖 ffmpeg 
+merge-mp3.sh 依赖 ffmpeg命令 
 
 text2speech.py 依赖 baidu-aip
 
-安装baidu-aip:
- pip3 install baidu-aip
+### 安装ffmpeg依赖
+
+* apt install ffmpeg
+
+### 安装baidu-aip:
+
+pip3 install baidu-aip
+
 or:
- pip3 install -r requirements.txt
 
+pip3 install -r requirements.txt
 
-使用：
- 1. __main__.py -d $mp3_dir filename.txt
- 2. merge-mp3.sh $mp3_dir out_mp3_filename.mp3
+### 使用：
+1. \_\_main\_\_.py -d $mp3\_dir filename.txt
+2. merge-mp3.sh $mp3\_dir out\_mp3\_filename.mp3
+
+### 详细用法：
+
+* \_\_main\_\_.py --help
