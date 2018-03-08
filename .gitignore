@@ -2,3 +2,4 @@ __pycache__/
 baidu-aip/
 aip-key-id.json
 tdir/
+*.mp3

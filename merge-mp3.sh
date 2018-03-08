@@ -4,24 +4,36 @@
 
 lists='mp3.lists'
 
-:> $lists
 
-if [ -z "$1" ];then
-	echo "指定一个输出文件."
+usage(){
+	echo "Using: ${##/0} <mp3_dir> <outfilename>"
+}
+
+if [ ! -d "$1" ];then
+	usage
 	exit 1
+else
+	mp3_dir="${1%/}"
 fi
 
 
-for mp3 in "tdir"/*;
+if [ -z "$2" ];then
+	usage
+	exit 1
+fi
+
+:> $lists
+
+for mp3 in "$mp3_dir"/*;
 do
 	#echo "file ${mp3}"
 	echo "file ${mp3}" >> $lists
 done
 
-ffmpeg -f concat -i $lists -acodec copy "$1"
+ffmpeg -f concat -i $lists -acodec copy "$2"
 
 if [ $? -ne 0 ];then
-	echo "合成mp3出错.."
+	echo "ffmpeg 合成mp3出错.."
 	exit 1
 fi
 
