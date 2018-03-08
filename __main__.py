@@ -5,7 +5,6 @@
 
 
 import sys
-import os
 from random import random
 from time import sleep
 from os.path import join,isfile,isdir
@@ -20,6 +19,9 @@ from splittext import SplitText
 APP_ID ,API_KEY ,SECRET_KEY = appkey.appKey()
 
 def seq(num, max_num=10):
+    """
+    把一系列序号转换成一个等长字符串，用于一系列有序的文件名
+    """
     num_str = str(num)
 
     if len(num_str) > max_num:
@@ -38,6 +40,9 @@ task_q = Queue(200)
 result_q = Queue(200)
 
 def worker_task(txtfile):
+    """
+    把任务加入任务队列
+    """
     st = SplitText(txtfile)
     i = 0
     text = True
