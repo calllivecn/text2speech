@@ -15,7 +15,7 @@ class SplitText:
     def __init__(self,filename):
         self.FILE = open(filename)
         self.BUF = 1024
-        self.FLAG = '，。；,.'
+        self.CUT_FLAG = '，。；,.;'
         self.S = []
         self.line = []
         self.re = re.compile(r'。+')
@@ -24,6 +24,9 @@ class SplitText:
         self.FILE.close()
 
     def _cut(self):
+        """
+        从txt文件里已self.CUT_FLAG组合整句
+        """
         l = []
         data = self.FILE.read(self.BUF)
 
@@ -40,7 +43,7 @@ class SplitText:
             if ch_s == '':
                 continue
             for ch in ch_s:
-                if ch in self.FLAG:
+                if ch in self.CUT_FLAG:
                     self.line.append(ch)
                     l.append("".join(self.line))
                     self.line.clear()
@@ -54,6 +57,9 @@ class SplitText:
         return l
 
     def _check(self,para):
+        """
+        check 一个单句有没有大于 BAIDU_SPEECH_LIMIT，大于就截断。
+        """
         l = []
         for line in para:
             while True:
@@ -69,6 +75,10 @@ class SplitText:
         return l
 
     def getParagraph(self):
+        """
+        返回一个512字内的整句子，如果一个整句大于512字，截断返回512字。
+        结束，返回空字符串。
+        """
         string = ''
         str_len = 0
         while True:
