@@ -10,7 +10,7 @@ from time import sleep
 from os.path import join,isfile,isdir
 from queue import Queue
 from threading import Thread
-from argparse import ArgumentParser
+from argparse import ArgumentParser,ArgumentTypeError
 
 import appkey
 from text2speech import Text2Speech
@@ -65,9 +65,6 @@ def worker_th_task(verbose=False):
 
         task = task_q.get()
 
-        if verbose:
-            print(task)
-
         if task == DONE:
             if task_q.empty():
                 result_q.put(DONE)
@@ -76,6 +73,9 @@ def worker_th_task(verbose=False):
             else:
                 task_q.put(DONE)
         else: 
+
+            if verbose:
+                print(task)
             speech = t2s.t2s(task)
             #RandomSleep();speech = b'a'
             result_q.put((task[0],speech))
@@ -102,27 +102,32 @@ def worker_result(threads,output_dir='.'): # output_dir is cwd
         else:
             print('result_q.get() exception.')
 
+## chech args
+def _isdir(string):
+    if isdir(string):
+        return string
+    else:
+        raise ArgumentTypeError('{} is not directory'.format(string))
+
+def _isfile(string):
+    if isfile(string):
+        return string
+    else:
+        raise ArgumentTypeError('{} is not txt file'.format(string))
+
 
 def main():
-    parse = ArgumentParser(usage='Using: %(prog)s [-tdv] <txt>',
+    parse = ArgumentParser(usage='Using: %(prog)s [-tv] <txt> <mp3 output directory>',
             description='把小说转换成mp3，使用的baidu语音合成API.',
             epilog='NONE')
-    parse.add_argument('-t','--threads',type=int,default=50,help='spccify threads.')
-    parse.add_argument('-d','--dir',dest='dir',default='.',help='specify directory.')
+    parse.add_argument('-t','--threads',type=int,default=50,help='specify threads.')
     parse.add_argument('-v','--verbose',action='store_true',help='show verbose')
-    parse.add_argument('txt',help='txt text.')
+    parse.add_argument('-d','--dir',type=_isdir,required=True,help='specify directory.')
+    parse.add_argument('txt',type=_isfile,help='txt text.')
     args = parse.parse_args()
-    #print(args)
+
+    #print(args);exit(1)
     
-    ## chech args
-    if not isdir(args.dir):
-        print('-d/--dir is not directory.')
-        exit(1)
-
-    if not isfile(args.txt):
-        print('txt is not file.')
-        exit(1)
-
     # start thread
     for _ in range(args.threads):
         th = Thread(target=worker_th_task,args=(args.verbose,),daemon=True)
