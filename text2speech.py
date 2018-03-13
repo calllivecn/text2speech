@@ -24,7 +24,8 @@ class Text2Speech:
         while True:
 
             try:
-                result = self.aipSpeech.synthesis(text[1],'zh',1,{'cuid':self.user_id,'vol':7,'per':3}) 
+                result = self.aipSpeech.synthesis(text[1],'zh',1,
+                            {'cuid':self.user_id,'vol':7,'per':3}) 
             except Exception as e:
                 print('\x1b[31m合成异常。重试ing\x1b[0m',text)
                 time.sleep(1)

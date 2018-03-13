@@ -117,13 +117,18 @@ def _isfile(string):
 
 
 def main():
-    parse = ArgumentParser(usage='Using: %(prog)s [-tv] <txt> <mp3 output directory>',
-            description='把小说转换成mp3，使用的baidu语音合成API.',
+    parse = ArgumentParser(usage='Using: %(prog)s [-tv] <txt> <mp3 '\
+            'output directory>',
+            description='把小说转换成mp3，使用baidu语音合成API.',
             epilog='NONE')
-    parse.add_argument('-t','--threads',type=int,default=50,help='specify threads.')
-    parse.add_argument('-v','--verbose',action='store_true',help='show verbose')
-    parse.add_argument('-d','--dir',type=_isdir,required=True,help='specify directory.')
-    parse.add_argument('txt',type=_isfile,help='txt text.')
+    parse.add_argument('-t','--threads',type=int,default=50,
+            help='specify threads.')
+    parse.add_argument('-v','--verbose',action='store_true',
+            help='show verbose')
+    parse.add_argument('-d','--dir',type=_isdir,required=True,
+            help='specify directory.')
+    parse.add_argument('txt',type=_isfile,
+            help='txt text.')
     args = parse.parse_args()
 
     #print(args);exit(1)

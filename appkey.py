@@ -16,8 +16,7 @@ def appKey(APP_KEY='aip-key-id.json'):
     if app_id and api_key and secret_key:
         return app_id ,api_key ,secret_key
     else:
-        print(APP_KEY,'错误.')
-        exit(2)
+        raise ValueError('AppKey config Error.')
 
 if __name__ == "__main__":
     print(appKey())
