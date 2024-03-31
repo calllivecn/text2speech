@@ -1,6 +1,6 @@
 #!/bin/bash
 # date 2018-02-27 16:14:50
-# author calllivecn <c-all@qq.com>
+# author calllivecn <calllivecn@outlook.com>
 
 lists='mp3.lists'
 

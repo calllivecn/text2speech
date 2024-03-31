@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #coding=utf-8
 # date 2018-02-08 23:15:46
-# author calllivecn <c-all@qq.com>
+# author calllivecn <calllivecn@outlook.com>
 
 
 
